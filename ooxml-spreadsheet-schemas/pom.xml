@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+    <parent>
+        <groupId>org.wso2.carbon</groupId>
+        <artifactId>orbit-parent</artifactId>
+        <version>4.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.apache.poi.wso2</groupId>
+    <artifactId>ooxml-spreadsheet-schemas</artifactId>
+    <packaging>bundle</packaging>
+    <name>ooxml-spreadsheet-schemas.wso2</name>
+    <version>1.1.wso2v1</version>
+    <description>
+        This bundle will represent org.openxmlformats.schemas.spreadsheetml
+    </description>
+    <url>http://wso2.org</url>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>ooxml-schemas</artifactId>
+            <version>1.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Export-Package>
+                            org.openxmlformats.schemas.spreadsheetml.*,
+                            schemaorg_apache_xmlbeans.*;-split-package:=merge-first,
+                            schemasMicrosoftComOfficeExcel*,
+                        </Export-Package>
+                        <Import-Package>
+                            !org.openxmlformats.schemas.spreadsheetml.*,
+                            !schemaorg_apache_xmlbeans.*,
+                            !schemasMicrosoftComOfficeExcel.*,
+                            *;resolution:=optional
+                        </Import-Package>
+                        <DynamicImport-Package>*</DynamicImport-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

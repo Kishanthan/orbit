@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		~ Copyright (c) 2005-2011, WSO2 Inc. (http://www.wso2.org) All Rights
+		Reserved. ~ ~ WSO2 Inc. licenses this file to you under the Apache
+		License, ~ Version 2.0 (the "License"); you may not use this file
+		except ~ in compliance with the License. ~ You may obtain a copy of
+		the License at ~ ~ http://www.apache.org/licenses/LICENSE-2.0 ~ ~
+		Unless required by applicable law or agreed to in writing, ~ software
+		distributed under the License is distributed on an ~ "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY ~ KIND, either express or
+		implied. See the License for the ~ specific language governing
+		permissions and limitations ~ under the License.
+	-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>org.wso2.carbon</groupId>
+		<artifactId>orbit-parent</artifactId>
+		<version>4.0.0-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>bundle</packaging>
+	<groupId>solr.wso2</groupId>
+	<artifactId>solr</artifactId>
+	<version>1.4.1.wso2v1</version>
+	<name>solr.wso2</name>
+	<description>
+		This bundle will represent solr and lucene jars
+	</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-core</artifactId>
+			<version>${solr.version}</version>
+			<optional>true</optional>
+			<exclusions>
+			    <exclusion>
+			        <groupId>commons-httpclient</groupId>
+			        <artifactId>commons-httpclient</artifactId>
+			    </exclusion>
+			    <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-stax-api_1.0_spec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>woodstox</groupId>
+                    <artifactId>wstx-asl</artifactId>
+                </exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>${solr.version}</version>
+			<optional>true</optional>
+			<exclusions>
+                <exclusion>
+                    <groupId>commons-httpclient</groupId>
+                    <artifactId>commons-httpclient</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.woodstox</groupId>
+                    <artifactId>wstx-asl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-stax-api_1.0_spec</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-highlighter</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-memory</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-queries</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-snowball</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-misc</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-spellchecker</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>${lucene.version}</version>
+			<optional>true</optional>
+		</dependency>
+		
+		<!--
+			dependency> <groupId>org.apache.solr</groupId>
+			<artifactId>solr-common</artifactId>
+			<version>${solr.version}</version> </dependency
+		-->
+	</dependencies>
+
+	<pluginRepositories>
+
+		<pluginRepository>
+			<id>apache.snapshots</id>
+			<name>snapshot plugins</name>
+			<url>http://people.apache.org/repo/m2-snapshot-repository</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>apache.maven2.repo</id>
+			<name>maven2 repo</name>
+			<url>http://repo1.maven.org/maven2</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Export-Package>
+							org.apache.solr.*,
+							org.apache.lucene.*;version="${lucene.version}";-split-package:=merge-last,
+							org.tartarus.*,
+                        </Export-Package>
+						<!-- <_exportcontents>org.h2.*</_exportcontents> -->
+						<Import-Package>
+							!org.apache.solr.*,
+							*;resolution:=optional
+                        </Import-Package>
+						<DynamicImport-Package>*</DynamicImport-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

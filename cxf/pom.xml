@@ -1,0 +1,141 @@
+<!--
+ ~ Copyright (c) 2005-2011, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>org.wso2.carbon</groupId>
+        <artifactId>orbit-parent</artifactId>
+        <version>4.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.apache.cxf.wso2</groupId>
+    <artifactId>cxf-bundle</artifactId>
+    <packaging>bundle</packaging>
+    <name>cxf.wso2</name>
+    <version>2.5.2.wso2v1</version>
+    <description>
+        This is a CXF bundle which wraps the original CXF bundle and embeds some needed extra
+        dependencies
+    </description>
+    <url>http://wso2.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-bundle</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.neethi</groupId>
+            <artifactId>neethi</artifactId>
+            <version>${neethi.cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.xmlschema</groupId>
+            <artifactId>xmlschema-core</artifactId>
+            <version>${xmlschema.cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-resolver</groupId>
+            <artifactId>xml-resolver</artifactId>
+            <version>${xml.resolver.cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <!--This configuration is directly copied from CXF bundle config-->
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Implementation-Title>Apache CXF</Implementation-Title>
+                        <Implementation-Vendor>The Apache Software Foundation</Implementation-Vendor>
+                        <Implementation-Vendor-Id>org.apache</Implementation-Vendor-Id>
+                        <Implementation-Version>${cxf.osgi.version.clean}</Implementation-Version>
+                        <Specification-Title>Apache CXF</Specification-Title>
+                        <Specification-Vendor>The Apache Software Foundation</Specification-Vendor>
+                        <Specification-Version>${cxf.osgi.version.clean}</Specification-Version>
+                        <SPI-Provider>true</SPI-Provider>
+                        <DynamicImport-Package>
+                            javax.xml.bind.*;version="0.0.0",
+                            javax.xml.ws.*;version="0.0.0",
+                            *
+                        </DynamicImport-Package>
+                        <Import-Package>
+                            !org.apache.cxf.*,
+                            javax.xml.soap.*;version="0.0.0"
+                        </Import-Package>
+                        <Bundle-Activator>org.apache.cxf.bus.osgi.CXFActivator</Bundle-Activator>
+                        <Export-Package>
+                            org.apache.cxf.*;version=${cxf.osgi.version.clean};-split-package:=merge-first,
+                            '=META-INF.cxf.osgi';version=${cxf.osgi.version.clean},
+                            '=META-INF.cxf';version=${cxf.osgi.version.clean}
+                        </Export-Package>
+                        <_failok>true</_failok>
+                        <_nouses>true</_nouses>
+                        <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
+
+                        <!--We have to embed the following dependencies inside the CXF bundle to make it work
+                            inside Carbon. This is because we already have a different version of Neethi which
+                            is not properly versioned. etc.-->
+                        <Embed-Dependency>
+                            neethi;scope=compile|runtime;inline=false;,
+                            xmlschema-core;scope=compile|runtime;inline=false;,
+                            xml-resolver;scope=compile|runtime;inline=false;
+                            jaxb-impl;scope=compile|runtime;inline=false;
+                        </Embed-Dependency>
+                        <Include-Resource>
+                            @cxf-bundle-2.5.2.jar!/schemas/*,
+                            @cxf-bundle-2.5.2.jar!/OSGI-INF/*,
+                            @cxf-bundle-2.5.2.jar!/META-INF/*
+                        </Include-Resource>
+
+                        <!--We have to make this a fragment bundle of the Tomcat bundle to get the CXF + Spring + Tomcat
+                            combination to work properly. There are resources loaded from META-INF/xxx. -->
+                        <Fragment-Host>
+                            tomcat
+                        </Fragment-Host>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <cxf.version>2.5.2</cxf.version>
+        <jaxb.version>2.1.13</jaxb.version>
+        <neethi.cxf.version>3.0.1</neethi.cxf.version>
+        <xmlschema.cxf.version>2.0.1</xmlschema.cxf.version>
+        <xml.resolver.cxf.version>1.2</xml.resolver.cxf.version>
+        <cxf.osgi.version.clean>${project.version}</cxf.osgi.version.clean>
+    </properties>
+
+</project>

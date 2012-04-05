@@ -1,0 +1,156 @@
+<!--
+ ~ Copyright (c) 2005-2011, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+    <parent>
+        <groupId>org.wso2.carbon</groupId>
+        <artifactId>orbit-parent</artifactId>
+        <version>4.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>quickfixj.wso2</groupId>
+    <artifactId>quickfixj</artifactId>
+    <packaging>bundle</packaging>
+    <name>quickfixj.wso2</name>
+    <version>1.4.0.wso2v1</version>
+    <description>
+        This bundle will export packages for quickfixj
+    </description>
+    <url>http://wso2.org</url>
+
+    <dependencies>
+        <!-- QuickFIX/J dependencies -->
+        <!--dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+            <version>${geronimo.j2ee.management.version}</version>
+        </dependency-->
+        <dependency>
+            <groupId>org.apache.mina</groupId>
+            <artifactId>mina-core</artifactId>
+            <version>${mina.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>quickfixj</groupId>
+            <artifactId>quickfixj-all</artifactId>
+            <version>${qfj.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>slf4j.wso2</groupId>
+            <artifactId>slf4j</artifactId>
+            <version>${slf4j.wso2.version}</version>
+            <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Export-Package>
+                            quickfix.*;-split-package:=merge-last,
+                            org.quickfixj*;-split-package:=merge-last,
+                            org.slf4j.*;-split-package:=merge-last,
+                            org.apache.mina.*,
+                        </Export-Package>
+                        <Import-Package>
+                            !quickfix.*,
+                            !org.quickfixj*,
+                            !org.slf4j.*,
+                            !org.apache.mina.*,
+                            *;resolution:=optional
+                        </Import-Package>
+                        <Include-Resource>
+                            @quickfixj-all-1.4.0.jar!/FIX40.xml,
+                            @quickfixj-all-1.4.0.jar!/FIX41.xml,
+                            @quickfixj-all-1.4.0.jar!/FIX42.xml,
+                            @quickfixj-all-1.4.0.jar!/FIX43.xml,
+                            @quickfixj-all-1.4.0.jar!/FIX44.xml,
+			    @quickfixj-all-1.4.0.jar!/FIX50.xml,
+			    @quickfixj-all-1.4.0.jar!/FIXT11.xml,
+                        </Include-Resource>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+        </repository>
+        <!--moved to nexus
+
+        <repository>
+            <id>apache-snapshots</id>
+            <name>Apache Maven 2 Snapshot Repository</name>
+            <url>http://people.apache.org/repo/m2-snapshot-repository/</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>interval:60</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>wso2-m2</id>
+            <name>WSO2 Maven 2 Repository</name>
+            <url>http://dist.wso2.org/maven2/</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+
+        -->
+    </repositories>
+
+    <properties>
+        <qfj.version>1.4.0</qfj.version>
+        <mina.version>1.1.0</mina.version>
+    </properties>
+
+</project>

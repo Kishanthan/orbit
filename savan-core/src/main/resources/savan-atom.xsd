@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ~ Copyright (c) 2005-2011, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<xs:schema targetNamespace="http://wso2.com/eventing/atom/"
+           xmlns:savanAtom="http://wso2.com/eventing/atom/"
+           xmlns:wsa="http://www.w3.org/2005/08/addressing"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xwsdm="http://extreme.indiana.edu/wsdm/config/"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+
+  <xs:import namespace="http://www.w3.org/2005/08/addressing"
+             schemaLocation="ws-addr.xsd"/>
+
+
+  <xs:element name="createFeed">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="EndTo" type="wsa:EndpointReferenceType" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="Expires" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="Filter" type="savanAtom:FilterType" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="author" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:complexType name="DeliveryType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Mode" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="FilterType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Dialect" type="xs:anyURI"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+
+  <xs:element name="createFeedResponse">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="SubscriptionManager" type="wsa:EndpointReferenceType" minOccurs="1"
+                    maxOccurs="1"/>
+        <xs:element name="Expires" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="FeedUrl" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RenewFeed">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Expires" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RenewFeedResponse">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="Expires" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DeleteFeed" type="xs:string"/>
+  <xs:element name="DeleteFeedResponse" type="xs:string"/>
+
+</xs:schema>
+             

@@ -1,0 +1,121 @@
+<!--
+ ~ Copyright (c) 2005-2011, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>org.wso2.carbon</groupId>
+        <artifactId>orbit-parent</artifactId>
+        <version>4.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>commons-scxml.wso2</groupId>
+    <artifactId>commons-scxml</artifactId>
+    <packaging>bundle</packaging>
+    <name>commons-scxml.wso2</name>
+    <version>0.9.0.wso2v1</version>
+    <description>
+    This bundle will represent commons-digester.
+    </description>
+    <url>http://wso2.org</url>
+
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+        </repository>
+        <!--moved to nexus
+
+     <repository>
+       <id>jboss.org</id>
+       <name>JBoss Repository</name>
+       <url> http://repository.jboss.org/maven2/</url>
+    </repository> 
+
+        -->
+    </repositories>
+
+    <dependencies> 
+        <dependency>
+         <groupId>commons-scxml</groupId>
+         <artifactId>commons-scxml</artifactId>
+         <version>0.9</version>
+         <optional>true</optional>
+     </dependency>
+        <dependency>
+         <groupId>commons-digester</groupId>
+         <artifactId>commons-digester</artifactId>
+         <version>1.8.1</version>
+         <optional>true</optional>
+     </dependency>
+       <dependency>
+         <groupId>commons-beanutils</groupId>
+         <artifactId>commons-beanutils</artifactId>
+         <version>1.8.2</version>
+         <optional>true</optional>
+     </dependency>
+      <dependency>
+         <groupId>org.apache.myfaces.core</groupId>
+         <artifactId>myfaces-api</artifactId>
+         <version>1.2.7</version>
+         <optional>true</optional>
+     </dependency>
+   </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                         <Embed-Dependency>
+                         commons-scxml;scope=compile|runtime;inline=false;
+			 </Embed-Dependency>
+			 <Export-Package>
+			org.apache.commons.scxml.*; version=1.0.0,
+			javax.faces.context.*,
+			org.apache.commons.digester.*; version="1.8.1",
+			org.apache.commons.beanutils.*; version="1.8.2"
+			 </Export-Package>
+			<Import-Package>	
+			!javax.el.*; version="0.0.0",
+			javax.el.*; version="1.0.0",
+			!org.apache.commons.digester.*; version="0.0.0",
+			org.apache.commons.digester.*; version="1.8.1",
+			!org.apache.commons.beanutils.*; version="0.0.0",
+			org.apache.commons.beanutils.*; version="1.8.2"
+			</Import-Package>	
+                        <DynamicImport-Package>*</DynamicImport-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
