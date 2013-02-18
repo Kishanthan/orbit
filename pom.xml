@@ -47,6 +47,7 @@
                 <version>2.4</version>
             </dependency>
 
+
             <!-- Start of OSGi dependencies with Felix -->
             <dependency>
                 <groupId>org.apache.felix</groupId>
